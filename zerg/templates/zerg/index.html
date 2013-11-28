@@ -1,0 +1,82 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block subtitle %}{% endblock %}GW2 Queensdale Zerg{% block titleAdd %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Celeo">
+
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "zerg/main.css" %}">
+    {% block extraCSS %}{% endblock %}
+	<script src="{% static 'bootstrap/js/jquery.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap-tooltip.js' %}"></script>
+    {% block javascript %}{% endblock %}
+    {% block extraHead %}{% endblock %}
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar">1</span>
+            <span class="icon-bar">2</span>
+            <span class="icon-bar">3</span>
+            </button>
+            <a class="brand" href="/zerg/">GW2 Queensdale Zerg Tracker</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<pre style="width: 50%;">
+Last updated on {{ last_updated|date:"g:i:s" }}
+It is currently {{ now|date:"g:i:s" }}
+</pre>
+
+<hr>
+
+<div class="row">
+	<div class="span4">
+		Troll: <span class="label{% if troll.status == 'Active' %} label-success{% elif troll.status == 'Warmup' %} label-warning{% elif troll.status == 'Preparation' %} label-info{% endif %}">{{ troll.status }}</span>
+	</div>
+	<div class="span4">
+		Boar: <span class="label{% if boar.status == 'Active' %} label-success{% elif boar.status == 'Warmup' %} label-warning{% elif boar.status == 'Preparation' %} label-info{% endif %}">{{ boar.status }}</span>
+	</div>
+	<div class="span4">
+		Oak: <span class="label{% if oak.status == 'Active' %} label-success{% elif oak.status == 'Warmup' %} label-warning{% elif oak.status == 'Preparation' %} label-info{% endif %}">{{ oak.status }}</span>
+	</div>
+</div>
+<div class="row">
+	<div class="span4">
+		Bandit: <span class="label{% if bandit.status == 'Active' %} label-success{% elif bandit.status == 'Warmup' %} label-warning{% elif bandit.status == 'Preparation' %} label-info{% endif %}">{{ bandit.status }}</span>
+	</div>
+	<div class="span4">
+		Spider: <span class="label{% if spider.status == 'Active' %} label-success{% elif spider.status == 'Warmup' %} label-warning{% elif spider.status == 'Preparation' %} label-info{% endif %}">{{ spider.status }}</span>
+	</div>
+	<div class="span4">
+		Wasp: <span class="label{% if wasp.status == 'Active' %} label-success{% elif wasp.status == 'Warmup' %} label-warning{% elif wasp.status == 'Preparation' %} label-info{% endif %}">{{ wasp.status }}</span>
+	</div>
+</div>
+
+<hr>
+
+<footer>
+    <p>&copy; <a href="https://github.com/Celeo">Celeo</a> 2013</p>
+    <p>
+        This website uses <a href="https://www.djangoproject.com/">Django</a>, <a href="http://twitter.github.io/bootstrap/">Bootstrap</a>
+    </p>
+    {% block extraFooter %}{% endblock %}
+</footer>
+</div>
+{% block loadLaterJavascript %}{% endblock %}
+
+</body>
+
+</html>
