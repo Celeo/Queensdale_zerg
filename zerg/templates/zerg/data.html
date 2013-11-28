@@ -1,0 +1,29 @@
+<pre style="width: 50%;">
+Last updated on {{ last_updated|date:"g:i:s" }}
+It is currently {{ now|date:"g:i:s" }}
+</pre>
+
+<hr>
+
+<div class="row">
+	<div class="span4">
+		Troll: <span class="label{% if troll.status == 'Active' %} label-success{% elif troll.status == 'Warmup' %} label-warning{% elif troll.status == 'Preparation' %} label-info{% endif %}">{{ troll.status }}</span>
+	</div>
+	<div class="span4">
+		Boar: <span class="label{% if boar.status == 'Active' %} label-success{% elif boar.status == 'Warmup' %} label-warning{% elif boar.status == 'Preparation' %} label-info{% endif %}">{{ boar.status }}</span>
+	</div>
+	<div class="span4">
+		Oak: <span class="label{% if oak.status == 'Active' %} label-success{% elif oak.status == 'Warmup' %} label-warning{% elif oak.status == 'Preparation' %} label-info{% endif %}">{{ oak.status }}</span>
+	</div>
+</div>
+<div class="row">
+	<div class="span4">
+		Bandit: <span class="label{% if bandit.status == 'Active' %} label-success{% elif bandit.status == 'Warmup' %} label-warning{% elif bandit.status == 'Preparation' %} label-info{% endif %}">{{ bandit.status }}</span>
+	</div>
+	<div class="span4">
+		Spider: <span class="label{% if spider.status == 'Active' %} label-success{% elif spider.status == 'Warmup' %} label-warning{% elif spider.status == 'Preparation' %} label-info{% endif %}">{{ spider.status }}</span>
+	</div>
+	<div class="span4">
+		Wasp: <span class="label{% if wasp.status == 'Active' %} label-success{% elif wasp.status == 'Warmup' %} label-warning{% elif wasp.status == 'Preparation' %} label-info{% endif %}">{{ wasp.status }}</span>
+	</div>
+</div>

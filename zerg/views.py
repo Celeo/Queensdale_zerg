@@ -7,7 +7,7 @@ troll_event = 'D17D47E9-0A87-4189-B02A-54E23AA91A82'
 boar_event = '69D031A8-7AD2-4419-B564-48457841A57C'
 oak_event = '04084490-0117-4D56-8D67-C4FFFE933C0C'
 bandit_event = 'BC997F15-4C05-4D95-A14F-9B7C4CF41B4E'
-spider_event = 'BA9A0595-28BC-4B60-965D-F1EF94B6068A' # TODO: Don't think that this is correct
+spider_event = 'BA9A0595-28BC-4B60-965D-F1EF94B6068A' # TODO: This is incorrect
 wasp_event = '3C3915FB-E2E4-4794-A700-E3B5FCFE0404'
 zerg_events = [troll_event, boar_event, oak_event, bandit_event, spider_event, wasp_event]
 
@@ -87,9 +87,12 @@ def is_zerg_event(event_id):
     return event_id in zerg_events
 
 def index(request):
+    return render(request, 'zerg/index.html')
+
+def data(request):
     global last_updated
     if should_update():
         update_all()
     now = datetime.now()
-    return render(request, 'zerg/index.html', {'last_updated': last_updated, 'now': now, 'troll': troll, 'boar': boar,
+    return render(request, 'zerg/data.html', {'last_updated': last_updated, 'now': now, 'troll': troll, 'boar': boar,
         'oak': oak, 'bandit': bandit, 'spider': spider, 'wasp': wasp})
