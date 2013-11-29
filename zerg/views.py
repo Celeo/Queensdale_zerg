@@ -9,7 +9,8 @@ oak_event = '04084490-0117-4D56-8D67-C4FFFE933C0C'
 bandit_event = 'BC997F15-4C05-4D95-A14F-9B7C4CF41B4E'
 spider_event = 'BA9A0595-28BC-4B60-965D-F1EF94B6068A' # TODO: This is incorrect
 wasp_event = '3C3915FB-E2E4-4794-A700-E3B5FCFE0404'
-zerg_events = [troll_event, boar_event, oak_event, bandit_event, spider_event, wasp_event]
+sb_event = '31CEBA08-E44D-472F-81B0-7143D73797F5'
+zerg_events = [troll_event, boar_event, oak_event, bandit_event, spider_event, wasp_event, sb_event]
 
 class Champion:
     def __init__(self, name='', event_id='', status='Unknown'):
@@ -30,6 +31,7 @@ oak = Champion('Oak', oak_event)
 bandit = Champion('Bandit', bandit_event)
 spider = Champion('Spider', spider_event)
 wasp = Champion('Wasp', wasp_event)
+shadow = Champion('SB', sb_event)
 last_updated = None
 
 def get_short_name(event_id):
@@ -41,10 +43,12 @@ def get_short_name(event_id):
         return 'Oak'
     elif event_id == bandit_event:
         return 'Bandit'
-    elif event_id == spider_event:
-        return 'Spider'
+    # elif event_id == spider_event:
+        # return 'Spider'
     elif event_id == wasp_event:
         return 'Wasp'
+    elif event_id == sb_event:
+        return 'SB'
     else:
         return '-ERROR-'
 
@@ -78,6 +82,8 @@ def update_event(name, state):
         spider.update_status(state)
     elif name == 'Wasp':
         wasp.update_status(state)
+    elif name == 'SB':
+        shadow.update_status(state)
 
 def get_all_current_events():
     ret = [x for x in json.loads(urllib2.urlopen('https://api.guildwars2.com/v1/events.json?world_id=1021&map_id=15&lang=en').read())['events']]
@@ -95,4 +101,4 @@ def data(request):
         update_all()
     now = datetime.now()
     return render(request, 'zerg/data.html', {'last_updated': last_updated, 'now': now, 'troll': troll, 'boar': boar,
-        'oak': oak, 'bandit': bandit, 'spider': spider, 'wasp': wasp})
+        'oak': oak, 'bandit': bandit, 'spider': spider, 'wasp': wasp, 'shadow': shadow})

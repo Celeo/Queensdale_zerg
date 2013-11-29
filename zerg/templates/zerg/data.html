@@ -1,6 +1,6 @@
 <pre style="width: 50%;">
 Last updated on {{ last_updated|date:"g:i:s" }}
-It is currently {{ now|date:"g:i:s" }}
+Last refresh on {{ now|date:"g:i:s" }}
 </pre>
 
 <hr>
@@ -20,10 +20,15 @@ It is currently {{ now|date:"g:i:s" }}
 	<div class="span4">
 		Bandit: <span class="label{% if bandit.status == 'Active' %} label-success{% elif bandit.status == 'Warmup' %} label-warning{% elif bandit.status == 'Preparation' %} label-info{% endif %}">{{ bandit.status }}</span>
 	</div>
+	<!-- 
 	<div class="span4">
 		Spider: <span class="label{% if spider.status == 'Active' %} label-success{% elif spider.status == 'Warmup' %} label-warning{% elif spider.status == 'Preparation' %} label-info{% endif %}">{{ spider.status }}</span>
 	</div>
+	-->
 	<div class="span4">
 		Wasp: <span class="label{% if wasp.status == 'Active' %} label-success{% elif wasp.status == 'Warmup' %} label-warning{% elif wasp.status == 'Preparation' %} label-info{% endif %}">{{ wasp.status }}</span>
+	</div>
+	<div class="span4">
+		SB: <span class="label{% if shadow.status == 'Active' %} label-success{% elif shadow.status == 'Warmup' %} label-warning{% elif shadow.status == 'Preparation' %} label-info{% endif %}">{{ shadow.status }}</span>
 	</div>
 </div>
