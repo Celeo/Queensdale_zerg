@@ -7,10 +7,9 @@ troll_event = 'D17D47E9-0A87-4189-B02A-54E23AA91A82'
 boar_event = '69D031A8-7AD2-4419-B564-48457841A57C'
 oak_event = '04084490-0117-4D56-8D67-C4FFFE933C0C'
 bandit_event = 'BC997F15-4C05-4D95-A14F-9B7C4CF41B4E'
-spider_event = 'BA9A0595-28BC-4B60-965D-F1EF94B6068A' # TODO: This is incorrect
 wasp_event = '3C3915FB-E2E4-4794-A700-E3B5FCFE0404'
 sb_event = '31CEBA08-E44D-472F-81B0-7143D73797F5'
-zerg_events = [troll_event, boar_event, oak_event, bandit_event, spider_event, wasp_event, sb_event]
+zerg_events = [troll_event, boar_event, oak_event, bandit_event, wasp_event, sb_event]
 
 class Champion:
     def __init__(self, name='', event_id='', status='Unknown'):
@@ -29,7 +28,6 @@ troll = Champion('Troll', troll_event)
 boar = Champion('Boar', boar_event)
 oak = Champion('Oak', oak_event)
 bandit = Champion('Bandit', bandit_event)
-spider = Champion('Spider', spider_event)
 wasp = Champion('Wasp', wasp_event)
 shadow = Champion('SB', sb_event)
 last_updated = None
@@ -43,8 +41,6 @@ def get_short_name(event_id):
         return 'Oak'
     elif event_id == bandit_event:
         return 'Bandit'
-    # elif event_id == spider_event:
-        # return 'Spider'
     elif event_id == wasp_event:
         return 'Wasp'
     elif event_id == sb_event:
@@ -78,8 +74,6 @@ def update_event(name, state):
         oak.update_status(state)
     elif name == 'Bandit':
         bandit.update_status(state)
-    elif name == 'Spider':
-        spider.update_status(state)
     elif name == 'Wasp':
         wasp.update_status(state)
     elif name == 'SB':
@@ -101,4 +95,4 @@ def data(request):
         update_all()
     now = datetime.now()
     return render(request, 'zerg/data.html', {'last_updated': last_updated, 'now': now, 'troll': troll, 'boar': boar,
-        'oak': oak, 'bandit': bandit, 'spider': spider, 'wasp': wasp, 'shadow': shadow})
+        'oak': oak, 'bandit': bandit, 'wasp': wasp, 'shadow': shadow})
