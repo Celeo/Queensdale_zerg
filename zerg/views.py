@@ -1,3 +1,4 @@
+from django.http import HttpResponse # DELETE
 from django.shortcuts import render
 from datetime import datetime, timedelta
 import urllib2
@@ -10,6 +11,11 @@ bandit_event = 'BC997F15-4C05-4D95-A14F-9B7C4CF41B4E'
 wasp_event = '3C3915FB-E2E4-4794-A700-E3B5FCFE0404'
 sb_event = '31CEBA08-E44D-472F-81B0-7143D73797F5'
 zerg_events = [troll_event, boar_event, oak_event, bandit_event, wasp_event, sb_event]
+
+worlds = {}
+for d in json.loads(urllib2.urlopen('https://api.guildwars2.com/v1/world_names.json?lang=en').read()):
+    worlds[d['id']] = d['name']
+world_names = [str(d).replace(' ', '_') for d in worlds.itervalues()]
 
 class Champion:
     def __init__(self, name='', event_id='', status='Unknown'):
@@ -56,10 +62,10 @@ def should_update():
     diff = now - last_updated
     return diff.seconds > 30
 
-def update_all():
+def update_all(world_id):
     global last_updated
     now = datetime.now()
-    current_events = get_all_current_events()
+    current_events = get_all_current_events(world_id)
     for event in current_events:
         if is_zerg_event(event['event_id']):
             update_event(get_short_name(event['event_id']), event['state'])
@@ -79,20 +85,28 @@ def update_event(name, state):
     elif name == 'SB':
         shadow.update_status(state)
 
-def get_all_current_events():
-    ret = [x for x in json.loads(urllib2.urlopen('https://api.guildwars2.com/v1/events.json?world_id=1021&map_id=15&lang=en').read())['events']]
+def get_all_current_events(world_id):
+    ret = [x for x in json.loads(urllib2.urlopen('https://api.guildwars2.com/v1/events.json?world_id=%s&map_id=15&lang=en' % world_id).read())['events']]
     return ret
 
 def is_zerg_event(event_id):
     return event_id in zerg_events
 
 def index(request):
-    return render(request, 'zerg/index.html')
+    return render(request, 'zerg/world_choose.html', {'worlds': world_names})
 
-def data(request):
+def world(request, world_name):
+    world_name = world_name.replace('_', ' ')
+    world_id = -1
+    for id, name in worlds.items():
+        if name == world_name:
+            world_id = id
+    return render(request, 'zerg/index.html', {'world_name': world_name, 'world_id': world_id})
+
+def data(request, world_id):
     global last_updated
     if should_update():
-        update_all()
+        update_all(world_id)
     now = datetime.now()
     return render(request, 'zerg/data.html', {'last_updated': last_updated, 'now': now, 'troll': troll, 'boar': boar,
         'oak': oak, 'bandit': bandit, 'wasp': wasp, 'shadow': shadow})
