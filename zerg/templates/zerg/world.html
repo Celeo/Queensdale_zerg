@@ -15,16 +15,16 @@
 
 {% endblock %}
 
-
-
 {% block content %}
+
+<h2>{{ world_name }}</h2>
 
 <input type="hidden" id="world_name" value="{{ world_name }}">
 <input type="hidden" id="world_id" value="{{ world_id }}">
 
 <div class="container">
 
-<button class="btn" onclick="load();">Refresh now</button><br><br>
+<!-- <button class="btn" onclick="load();">Refresh now</button><br><br> -->
 
 <div id="d">Loading ...</div>
 
@@ -32,6 +32,6 @@
 
 From <a href="http://guildwars2.mmmos.com/index.php?page=view&id=17936&title=queensdale-champion-train-guide">MMMOS</a>:<br>
 <textarea style="width: 30%; height: 200px;">Champ Train order is: 1.Troll (W of [&BPQAAAA=]), 2.Bandit (NE of [&BPQAAAA=]), 3.Oak (W of [&BPMAAAA=]), 4.Spider (NE of [&BPgAAAA=]), 5.Boar/Wasp when it's up. (N of [&BIUAAAA=] use [&BPkAAAA=])</textarea><br>
-Paste that into chat to link someone the order of the train and its waypoints.
+Paste into chat to link the order of the train and its waypoints.
 
 {% endblock %}
