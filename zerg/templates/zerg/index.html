@@ -22,7 +22,7 @@
 		function load() {
 			var world_id = $('#world_id').val();
 			$("#d").text("Loading...");
-			$("#d").text("http://localhost:8000/zerg/data/" + world_id);
+			$("#d").load("http://localhost:8000/zerg/data/" + world_id);
 		}
 	</script>
 </head>
