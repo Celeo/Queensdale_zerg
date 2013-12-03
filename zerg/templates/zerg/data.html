@@ -33,8 +33,8 @@ Last refresh on {{ now|date:"g:i:s" }}
 	</div>
 </div>
 <br>
-<button class="btn" onclick="$('#log').toggle();">Toggle log</button>
-<br>
+<!-- <button class="btn" onclick="$('#log').toggle();">Toggle log</button>
+<br> -->
 <div id="log" style="width: 35%; border: 1px solid gray; margin-left: auto; margin-right: auto; text-align: left; padding-left: 10px;">
     {% for line in log %}
         {{ line }}<br>
