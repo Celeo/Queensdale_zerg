@@ -57,6 +57,7 @@ class World:
         self.wasp = Champion(name='Wasp', event_id=wasp_event)
         self.shadow = Champion(name='Shadow', event_id=sb_event)
         self.last_updated = None
+        self.log = []
     def __repr__(self):
         return '<World %s %s>' % (self.world_id, self.world_name)
     def get_champion_status(self, champion_name):
@@ -81,19 +82,37 @@ class World:
             if not is_zerg_event(event['event_id']):
                 continue
             n = get_short_name(event['event_id'])
+            now = datetime.now()
+            now_str = now.strftime('%H:%M:%S')
             if n == 'Troll':
+                if not self.troll.status == event['state']:
+                    self.log_line(state_change_message % (now_str, 'Troll', self.troll.status, event['state']))
                 self.troll.status = event['state']
             elif n == 'Boar':
+                if not self.boar.status == event['state']:
+                    self.log_line(state_change_message % (now_str, 'Boar', self.boar.status, event['state']))
                 self.boar.status = event['state']
             elif n == 'Oak':
+                if not self.oak.status == event['state']:
+                    self.log_line(state_change_message % (now_str , 'Oak', self.oak.status, event['state']))
                 self.oak.status = event['state']
             elif n == 'Bandit':
+                if not self.bandit.status == event['state']:
+                    self.log_line(state_change_message % (now_str, 'Bandit', self.bandit.status, event['state']))
                 self.bandit.status = event['state']
             elif n == 'Wasp':
+                if not self.wasp.status == event['state']:
+                    self.log_line(state_change_message % (now_str, 'Wasp', self.wasp.status, event['state']))
                 self.wasp.status = event['state']
             elif n == 'SB':
+                if not self.shadow.status == event['state']:
+                    self.log_line(state_change_message % (now_str, 'SB', self.shadow.status, event['state']))
                 self.shadow.status = event['state']
-        self.last_updated = datetime.now()
+        self.last_updated = now
+    def log_line(self, line):
+        self.log.append(line)
+        if len(self.log) > 30:
+            self.log = self.log[-30:]
 
 # ===============================
 #        Data setup
@@ -111,6 +130,8 @@ worlds = []
 for d in json.loads(urllib2.urlopen('https://api.guildwars2.com/v1/world_names.json?lang=en').read()):
     worlds.append(World(world_id=d['id'], world_name=d['name']))
 world_names = [world.world_name.replace(' ', '_') for world in worlds]
+
+state_change_message = '%s %s: %s -> %s'
 
 # ===============================
 #           Pages
@@ -133,4 +154,4 @@ def data(request, world_id):
     """ Data page for loading via Javacsript - return render of all data for that world """
     world = get_world_object(world_id)
     world.try_update()
-    return render(request, 'zerg/data.html', {'now': datetime.now(), 'world': world})
+    return render(request, 'zerg/data.html', {'now': datetime.now(), 'world': world, 'log': reversed(world.log)})

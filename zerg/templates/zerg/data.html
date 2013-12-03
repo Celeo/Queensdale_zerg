@@ -32,3 +32,11 @@ Last refresh on {{ now|date:"g:i:s" }}
 		SB: <span class="label{% if world.shadow.status == 'Active' %} label-success{% elif world.shadow.status == 'Warmup' %} label-warning{% elif world.shadow.status == 'Preparation' %} label-info{% endif %}">{{ world.shadow.status }}</span>
 	</div>
 </div>
+<br>
+<button class="btn" onclick="$('#log').toggle();">Toggle log</button>
+<br>
+<div id="log" style="width: 35%; border: 1px solid gray; margin-left: auto; margin-right: auto; text-align: left; padding-left: 10px;">
+    {% for line in log %}
+        {{ line }}<br>
+    {% endfor %}
+</div>
